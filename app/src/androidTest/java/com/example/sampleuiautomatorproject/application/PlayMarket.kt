@@ -2,14 +2,15 @@ package com.example.sampleuiautomatorproject.application
 
 import com.example.sampleuiautomatorproject.util.byStringRes
 import com.example.sampleuiautomatorproject.util.byText
+import com.example.sampleuiautomatorproject.util.device
 import com.example.sampleuiautomatorproject.util.ext.*
-import org.junit.Assert.assertTrue
 
 class PlayMarket : AbstractApplication("com.android.vending") {
 
-    private val searchSelector = byStringRes("com.android.vending:id/search_bar_hint")
-    private val searchInputSelector = byStringRes("com.android.vending:id/search_bar_text_input")
+    private val searchSelector = byText("Поиск игр и приложений")
+    private val searchInputSelector = byText("Search for apps & games")
     private val installButton = byText("Установить")
+    private val cancelButton = byText("Cancel")
     private val openInstalledAppButton = byText("Открыть")
 
     fun clickSearch() {
@@ -17,7 +18,8 @@ class PlayMarket : AbstractApplication("com.android.vending") {
     }
 
     fun typeToSearch(text: String) {
-        searchInputSelector.waitFindObject().text = text
+        searchSelector.waitFindObject().text = text
+        device.pressEnter()
     }
 
     fun clickResult(resultName: String) {
@@ -29,15 +31,13 @@ class PlayMarket : AbstractApplication("com.android.vending") {
     }
 
     fun waitForInstalled() {
-        assertTrue(
-            "Приложение не было установлено",
-            openInstalledAppButton
-                .waitFindObject()
-                .waitIsClickable(true, 20.secondsToMillis())
-        )
+        openInstalledAppButton
+            .waitFindObject()
+            .waitIsClickable(true, 25.secondsToMillis())
     }
 
     fun openInstalledApp() {
-        openInstalledAppButton.findObject().clickAndWaitnewWindow()
+        //device.click(770,540)
+        openInstalledAppButton.waitFindObject().clickAndWaitnewWindow()
     }
 }
