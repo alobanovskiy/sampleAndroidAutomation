@@ -1,20 +1,21 @@
 package com.example.sampleuiautomatorproject.test
 
-import com.example.sampleuiautomatorproject.application.OzonApp
-import com.example.sampleuiautomatorproject.util.ext.waitFindObject
+import com.example.sampleuiautomatorproject.application.ozon.OzonMainPage
+import com.example.sampleuiautomatorproject.application.ozon.ProfilePage
 import junit.framework.Assert.assertEquals
-import org.junit.Assert
 import org.junit.Test
 
-class OzonThirdTest : AbstractApplicationTest<OzonApp>(OzonApp()){
+class OzonThirdTest : AbstractApplicationTest<OzonMainPage>(
+    OzonMainPage()
+){
     @Test
     fun thirdTest() = with(app) {
         open()
         clickProfile()
         clickLogIn()
-        clickEnterByEmail()
-        typeIntoEmailField("text")
-        clickGetCode()
+        ProfilePage().clickEnterByEmail()
+        ProfilePage().typeIntoEmailField("text")
+        ProfilePage().clickGetCode()
         assertEquals(getErrorText(), "Некорректный формат почты")
     }
 }
